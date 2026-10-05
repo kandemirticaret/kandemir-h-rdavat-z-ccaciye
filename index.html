@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kandemir Hırdavat Züccaciye - Toptan & Perakende Katalog</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            blue: '#1E3A8A',
+                            darkBlue: '#0F172A',
+                            emerald: '#059669',
+                            green: '#22C55E',
+                            orange: '#EA580C',
+                            slateBg: '#F1F5F9'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #0284c7; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #0369a1; }
+        .subcat-active {
+            background-color: #1E3A8A !important;
+            color: #ffffff !important;
+            border-color: #1E3A8A !important;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col justify-between selection:bg-emerald-600 selection:text-white">
+
+    <!-- Top Announcement Bar -->
+    <div class="bg-slate-900 text-slate-200 text-xs py-2 px-4 border-b border-slate-800">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+            <div class="flex items-center space-x-4">
+                <span><i class="fa-solid fa-phone text-emerald-400 mr-1.5"></i> Müşteri Destek & İletişim: <strong>0530 000 00 00</strong></span>
+                <span class="hidden md:inline text-slate-400">|</span>
+                <span class="hidden md:inline"><i class="fa-solid fa-store text-emerald-400 mr-1.5"></i> Konerkay Plastik & Hırdavat Bayisi</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button onclick="openCatalogModal()" class="text-amber-400 hover:text-amber-300 font-bold flex items-center gap-1 transition-colors">
+                    <i class="fa-solid fa-book-open"></i> Dijital Kataloğu Aç
+                </button>
+                <span class="text-slate-600">|</span>
+                <button onclick="toggleAdminModal()" class="text-slate-300 hover:text-white font-medium flex items-center gap-1 transition-colors">
+                    <i class="fa-solid fa-lock text-xs"></i> Yönetici Paneli
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation Bar -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-md border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between gap-4">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="bg-gradient-to-br from-brand-blue to-slate-900 text-white p-2.5 rounded-xl shadow-md group-hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-boxes-packing text-2xl text-emerald-400"></i>
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-xl sm:text-2xl text-brand-blue leading-tight tracking-tight flex items-center gap-1.5">
+                        KANDEMİR <span class="text-xs bg-emerald-600 text-white font-bold px-2 py-0.5 rounded">TOPTAN & PERAKENDE</span>
+                    </h1>
+                    <p class="text-xs font-bold text-slate-500 uppercase tracking-widest">Hırdavat & Züccaciye Plastik Sanayi</p>
+                </div>
+            </a>
+
+            <!-- Search Bar -->
+            <div class="flex-1 max-w-lg hidden md:block relative">
+                <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Ürün adı, kayık tabak, kaşık, tornavida veya ürün kütüphanesinde ara..." 
+                    class="w-full pl-10 pr-4 py-2.5 bg-slate-100 border border-slate-300 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-blue text-sm transition-all shadow-inner">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400"></i>
+            </div>
+
+            <!-- WhatsApp Direct Contact Button -->
+            <div class="flex items-center gap-2">
+                <a href="https://wa.me/905300000000?text=Merhaba,%20Kandemir%20H%C4%B1rdavat%20Z%C3%BCccaciye%20katalo%C4%9Funuz%20hakk%C4%B1nda%20genel%20bilgi%20ve%20fiyat%20listesi%20almak%20istiyorum." 
+                   target="_blank" 
+                   class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all shadow-lg shadow-emerald-600/20 flex items-center gap-2">
+                    <i class="fa-brands fa-whatsapp text-lg"></i>
+                    <span>Direkt WhatsApp Danışma</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Mobile Search Bar -->
+        <div class="px-4 pb-3 md:hidden">
+            <div class="relative">
+                <input type="text" id="mobileSearchInput" oninput="handleSearch()" placeholder="Ürün veya kategori ara..." 
+                    class="w-full pl-10 pr-4 py-2 bg-slate-100 border border-slate-300 rounded-lg text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-blue">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400"></i>
+            </div>
+        </div>
+
+        <!-- Category Menu Tabs -->
+        <nav class="bg-brand-blue text-white overflow-x-auto shadow-inner border-t border-blue-900">
+            <div class="max-w-7xl mx-auto px-4 flex space-x-2 text-sm font-semibold whitespace-nowrap py-1.5">
+                <button onclick="filterMainCategory('Tümü')" class="main-cat-btn bg-blue-900 px-4 py-2 rounded-lg hover:bg-blue-800 transition-colors" data-cat="Tümü">
+                    <i class="fa-solid fa-layer-group mr-1.5"></i>Tüm Ürün Kataloğu
+                </button>
+                <button onclick="filterMainCategory('Mutfak & Züccaciye')" class="main-cat-btn px-4 py-2 rounded-lg hover:bg-blue-800 transition-colors" data-cat="Mutfak & Züccaciye">
+                    <i class="fa-solid fa-utensils mr-1.5 text-amber-300"></i>Mutfak & Züccaciye
+                </button>
+                <button onclick="filterMainCategory('Plastik Ev Gereçleri')" class="main-cat-btn px-4 py-2 rounded-lg hover:bg-blue-800 transition-colors" data-cat="Plastik Ev Gereçleri">
+                    <i class="fa-solid fa-boxes-stacked mr-1.5 text-sky-300"></i>Plastik Ev Eşyaları
+                </button>
+                <button onclick="filterMainCategory('Temizlik & Hijyen')" class="main-cat-btn px-4 py-2 rounded-lg hover:bg-blue-800 transition-colors" data-cat="Temizlik & Hijyen">
+                    <i class="fa-solid fa-pump-soap mr-1.5 text-emerald-300"></i>Temizlik Ürünleri
+                </button>
+                <button onclick="filterMainCategory('Hırdavat & Nalburie')" class="main-cat-btn px-4 py-2 rounded-lg hover:bg-blue-800 transition-colors" data-cat="Hırdavat & Nalburie">
+                    <i class="fa-solid fa-screwdriver-wrench mr-1.5 text-orange-400"></i>Hırdavat & Nalburie
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Sub-Category Filter Badges (Pills) -->
+    <div class="bg-slate-200/80 border-b border-slate-300 py-2.5 px-4 overflow-x-auto shadow-inner">
+        <div id="subCategoryContainer" class="max-w-7xl mx-auto flex items-center gap-2 whitespace-nowrap text-xs font-semibold">
+            <!-- Dynamic Sub-category Badges Rendered Here -->
+        </div>
+    </div>
+
+    <!-- Hero Banner & Information -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+        <div class="relative rounded-2xl overflow-hidden bg-gradient-to-r from-slate-900 via-brand-blue to-slate-800 text-white p-6 sm:p-8 shadow-xl border border-slate-700">
+            <div class="relative z-10 flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="max-w-2xl">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 text-xs font-bold uppercase rounded-full mb-3">
+                        <i class="fa-solid fa-circle-check"></i> Konerkay Plastik & Kandemir Hırdavat Yetkili Ürün Portföyü
+                    </span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold leading-tight mb-2">
+                        Kayık Tabaklar, Mutfak Takımları, Plastik & Hırdavat Çözümleri
+                    </h2>
+                    <p class="text-slate-300 text-xs sm:text-sm">
+                        İstediğiniz ürünün WhatsApp butona tıklayarak anında en güncel toptan / perakende fiyatını öğrenebilir, doğrudan sipariş oluşturabilirsiniz.
+                    </p>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+                    <button onclick="openCatalogModal()" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold px-5 py-3 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 text-sm">
+                        <i class="fa-solid fa-file-pdf text-lg"></i> Dijital Katalogda İncele
+                    </button>
+                    <a href="https://wa.me/905347934162?text=Merhaba,%20fiyat%20katalo%C9%9Fu%20talep%20ediyorum." target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-5 py-3 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 text-sm">
+                        <i class="fa-brands fa-whatsapp text-lg"></i> Fiyat Listesi İste
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Catalog Section -->
+    <main id="catalog" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow">
+        <!-- Section Header -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 border-b border-slate-200 pb-4">
+            <div>
+                <h3 id="catalogTitle" class="text-2xl font-extrabold text-slate-900 tracking-tight">Tüm Ürün Kataloğu</h3>
+                <p id="catalogSubtitle" class="text-slate-500 text-xs mt-0.5">Lütfen incelemek istediğiniz ürünün WhatsApp fiyat alma butonuna basınız.</p>
+            </div>
+            <div class="flex items-center gap-2 text-xs font-semibold text-slate-600 bg-white px-3 py-1.5 rounded-lg border border-slate-200 shadow-sm">
+                <span>Gösterilen Ürün:</span>
+                <span id="productCount" class="font-extrabold text-brand-blue text-sm">0</span>
+            </div>
+        </div>
+
+        <!-- Product Grid -->
+        <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <!-- Dynamic Product Cards Injected via JS -->
+        </div>
+
+        <!-- Empty State Message -->
+        <div id="noResults" class="hidden text-center py-20 bg-white rounded-2xl border border-slate-200 shadow-sm">
+            <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-400 text-2xl">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+            <h4 class="text-lg font-bold text-slate-800">Ürün Bulunamadı</h4>
+            <p class="text-slate-500 text-xs mt-1">Seçtiğiniz kritere veya aramaya uygun ürün katalogda mevcut değil.</p>
+            <button onclick="resetFilters()" class="mt-4 px-4 py-2 bg-brand-blue text-white rounded-lg text-xs font-bold hover:bg-blue-900 transition-colors">
+                Tüm Filtreleri Temizle
+            </button>
+        </div>
+    </main>
+
+    <!-- Product Detail Modal -->
+    <div id="productDetailModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200 flex flex-col md:flex-row overflow-hidden relative">
+            <button onclick="closeProductDetailModal()" class="absolute top-3 right-3 z-10 w-9 h-9 bg-slate-900/60 hover:bg-slate-900 text-white rounded-full flex items-center justify-center transition-colors">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <!-- Product Image -->
+            <div class="md:w-1/2 bg-slate-100 flex items-center justify-center p-4">
+                <img id="modalImg" src="" alt="" class="max-h-72 object-contain rounded-xl shadow-md">
+            </div>
+
+            <!-- Product Info -->
+            <div class="md:w-1/2 p-6 flex flex-col justify-between space-y-4">
+                <div>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span id="modalCategory" class="text-[10px] font-bold bg-brand-blue/10 text-brand-blue px-2.5 py-1 rounded-full uppercase">Kategori</span>
+                        <span id="modalCode" class="text-[10px] font-bold bg-slate-200 text-slate-700 px-2.5 py-1 rounded-full">Kod: -</span>
+                    </div>
+                    <h3 id="modalTitle" class="text-xl font-extrabold text-slate-900 leading-snug">Ürün Adı</h3>
+                    <p id="modalDesc" class="text-xs text-slate-600 mt-2 leading-relaxed">Açıklama alanı</p>
+
+                    <!-- Technical Specs -->
+                    <div class="mt-4 pt-3 border-t border-slate-200 space-y-1.5 text-xs text-slate-700">
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Koli / Paket İçi:</span>
+                            <span id="modalBoxQty" class="font-bold">24 Adet</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Malzeme Hammaddesi:</span>
+                            <span id="modalMaterial" class="font-bold">BPA İçermez PP / Çelik</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Stok Durumu:</span>
+                            <span class="font-bold text-emerald-600"><i class="fa-solid fa-circle-check"></i> Stokta Var</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Button -->
+                <a id="modalWhatsappBtn" href="#" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold py-3 rounded-xl transition-colors text-center text-sm shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2">
+                    <i class="fa-brands fa-whatsapp text-xl"></i>
+                    <span>Bu Ürün İçin Fiyat Al (WhatsApp)</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Digital Flipbook Catalog View Modal -->
+    <div id="catalogModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex flex-col">
+        <!-- Header Bar -->
+        <div class="bg-slate-900 text-white p-4 flex items-center justify-between border-b border-slate-800">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-book-open text-amber-400 text-xl"></i>
+                <h3 class="font-bold text-base sm:text-lg">Kandemir Hırdavat Züccaciye & Konerkay Dijital Katalog Modu</h3>
+            </div>
+            <button onclick="closeCatalogModal()" class="text-slate-400 hover:text-white p-2 text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <!-- Catalog Container -->
+        <div class="flex-1 overflow-y-auto p-4 sm:p-8">
+            <div class="max-w-6xl mx-auto bg-white rounded-2xl p-6 shadow-2xl space-y-6">
+                <div class="text-center max-w-xl mx-auto border-b pb-4">
+                    <h2 class="text-2xl font-black text-brand-blue">ÜRÜN KATALOĞU GÖRÜNÜMÜ</h2>
+                    <p class="text-xs text-slate-500 mt-1">Aşağıda tüm ürünlerimizi grup halinde fotoğraflı olarak görebilirsiniz.</p>
+                </div>
+
+                <div id="catalogFlipGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                    <!-- Dynamic Catalog Thumbnails -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Management Modal -->
+    <div id="adminModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden border border-slate-200">
+            <div class="p-4 bg-brand-darkBlue text-white flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-pen-to-square text-amber-400"></i>
+                    <h3 class="font-bold text-base">Kandemir Ürün / Fotoğraf Ekleme Paneli</h3>
+                </div>
+                <button onclick="toggleAdminModal()" class="text-slate-400 hover:text-white p-1">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+
+            <div class="p-6 overflow-y-auto space-y-6">
+                <form id="addProductForm" onsubmit="handleAddProduct(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Ürün Adı *</label>
+                        <input type="text" id="pName" required placeholder="Örn: Melamin Oval Kayık Tabak 25cm" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs outline-none focus:ring-2 focus:ring-brand-blue">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Ürün Kod Kodu *</label>
+                        <input type="text" id="pCode" required placeholder="Örn: KNR-305" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs outline-none focus:ring-2 focus:ring-brand-blue">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Ana Kategori *</label>
+                        <select id="pMainCat" onchange="updateAdminSubCatOptions()" required class="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs outline-none bg-white">
+                            <option value="Mutfak & Züccaciye">Mutfak & Züccaciye</option>
+                            <option value="Plastik Ev Gereçleri">Plastik Ev Gereçleri</option>
+                            <option value="Temizlik & Hijyen">Temizlik & Hijyen</option>
+                            <option value="Hırdavat & Nalburie">Hırdavat & Nalburie</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Alt Kategori *</label>
+                        <select id="pSubCat" required class="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs outline-none bg-white">
+                            <!-- Populated dynamically -->
+                        </select>
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Fotoğraf URL (Resim Bağlantısı) *</label>
+                        <input type="url" id="pImgUrl" required placeholder="https://images.unsplash.com/..." class="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs outline-none focus:ring-2 focus:ring-brand-blue">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Koli / Paket İçi Adet</label>
+                        <input type="text" id="pBoxQty" placeholder="24 Adet" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Malzeme Cinsi</label>
+                        <input type="text" id="pMaterial" placeholder="BPA İçermez Plastik / Çelik" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs outline-none">
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Açıklama</label>
+                        <textarea id="pDesc" rows="2" placeholder="Ürün detayları..." class="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs outline-none"></textarea>
+                    </div>
+                    <div class="sm:col-span-2 flex justify-end">
+                        <button type="submit" class="bg-brand-blue text-white px-6 py-2.5 rounded-xl font-bold text-xs hover:bg-blue-900 transition-colors">
+                            <i class="fa-solid fa-plus mr-1"></i> Kataloğa Yeni Ürün Ekle
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Admin Existing Products Table -->
+                <div class="pt-4 border-t border-slate-200">
+                    <h4 class="font-bold text-sm text-slate-800 mb-3">Mevcut Katalog Ürünleri</h4>
+                    <div class="overflow-x-auto max-h-60 border rounded-lg">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-slate-100 font-bold uppercase text-slate-600">
+                                <tr>
+                                    <th class="p-2">Kod</th>
+                                    <th class="p-2">Görsel</th>
+                                    <th class="p-2">Ürün</th>
+                                    <th class="p-2">Kategori</th>
+                                    <th class="p-2 text-right">Sil</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminTableBody" class="divide-y divide-slate-200">
+                                <!-- Dynamic admin rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 text-xs mt-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="space-y-3">
+                <div class="flex items-center gap-2 text-white font-extrabold text-base">
+                    <i class="fa-solid fa-boxes-packing text-emerald-400"></i> Kandemir Hırdavat Züccaciye
+                </div>
+                <p class="leading-relaxed text-slate-400">
+                    Züccaciye, kayık tabak grupları, kaşık & çatal setleri, Konerkay plastik ev ürünleri ve nalbiye hırdavat çeşitlerinde doğrudan toptan tedarikçiniz.
+                </p>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-3 uppercase tracking-wider">Hızlı Erişim Kategorileri</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" onclick="filterMainCategory('Mutfak & Züccaciye')" class="hover:text-emerald-400">Kayık Tabak & Mutfak Eşyaları</a></li>
+                    <li><a href="#" onclick="filterMainCategory('Plastik Ev Gereçleri')" class="hover:text-emerald-400">Plastik Saklama & Organizerlar</a></li>
+                    <li><a href="#" onclick="filterMainCategory('Temizlik & Hijyen')" class="hover:text-emerald-400">Temizlik Mop & Kovalar</a></li>
+                    <li><a href="#" onclick="filterMainCategory('Hırdavat & Nalburie')" class="hover:text-emerald-400">Hırdavat & Nalbiye Ürünleri</a></li>
+                </ul>
+            </div>
+            <div class="space-y-2">
+                <h4 class="text-white font-bold mb-3 uppercase tracking-wider">Müşteri İletişim Hatları</h4>
+                <p><i class="fa-solid fa-location-dot text-emerald-400 mr-2"></i> Züccaciyeciler & Hırdavatçılar Sanayi Sitesi No: 12</p>
+                <p><i class="fa-brands fa-whatsapp text-emerald-400 mr-2"></i> WhatsApp Sipariş: 0530 000 00 00</p>
+                <p><i class="fa-solid fa-envelope text-emerald-400 mr-2"></i> siparis@kandemirhuccaciye.com</p>
+            </div>
+        </div>
+        <div class="border-t border-slate-800 text-center py-4 text-slate-500">
+            © <span id="year"></span> Kandemir Hırdavat Züccaciye. Tüm Hakları Saklıdır.
+        </div>
+    </footer>
+
+    <script>
+        // Full Real Product Database for Kandemir Hırdavat Züccaciye
+        const initialProducts = [
+            // Mutfak & Züccaciye (Kayık Tabak, Kaşık, Saklama vb.)
+            {
+                id: 'p-101',
+                code: 'KNR-101',
+                name: 'Konerkay Melamin Oval Kayık Sunum Tabağı (Small)',
+                mainCategory: 'Mutfak & Züccaciye',
+                subCategory: 'Kayık Tabak & Sunumluklar',
+                image: 'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=600&q=80',
+                boxQty: '36 Adet',
+                material: 'Kırılmaz Sağlıklı Melamin',
+                desc: 'Restoran, ev ve davet yemekleri için ideal kırılmaz kayık tabak.'
+            },
+            {
+                id: 'p-102',
+                code: 'KNR-102',
+                name: 'Konerkay Büyük Boy Derin Kayık Meze Tabağı Seti',
+                mainCategory: 'Mutfak & Züccaciye',
+                subCategory: 'Kayık Tabak & Sunumluklar',
+                image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80',
+                boxQty: '24 Adet',
+                material: 'A Sınıfı Kırılmaz Plastik / Melamin',
+                desc: 'Salata, meze ve sıcak servisleri için dayanıklı kayık tabak dizaynı.'
+            },
+            {
+                id: 'p-103',
+                code: 'KNR-103',
+                name: '12 Parça Lüks Paslanmaz Yemek Kaşığı Takımı',
+                mainCategory: 'Mutfak & Züccaciye',
+                subCategory: 'Kaşık / Çatal / Bıçak Setleri',
+                image: 'https://images.unsplash.com/photo-1615865417236-d67f572a746f?auto=format&fit=crop&w=600&q=80',
+                boxQty: '12 Takım',
+                material: '18/10 Paslanmaz Çelik',
+                desc: 'Parlak polisaj kaplama, çizilmeye dayanıklı ergonomik yemek kaşığı takımı.'
+            },
+            {
+                id: 'p-104',
+                code: 'KNR-104',
+                name: 'Çelik Çay Kaşığı & Tatlı Çatalı Kombin Seti',
+                mainCategory: 'Mutfak & Züccaciye',
+                subCategory: 'Kaşık / Çatal / Bıçak Setleri',
+                image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=600&q=80',
+                boxQty: '20 Takım',
+                material: 'Paslanmaz Çelik',
+                desc: 'Günlük kullanım ve kafeler için ekstra dayanıklı kaşık takımı.'
+            },
+            {
+                id: 'p-105',
+                code: 'KNR-105',
+                name: 'Konerkay 4\'lü Kilitli Şeffaf Saklama Kabı Seti',
+                mainCategory: 'Mutfak & Züccaciye',
+                subCategory: 'Saklama Kapları',
+                image: 'https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=600&q=80',
+                boxQty: '16 Set',
+                material: 'BPA İçermez Polipropilen Plastik',
+                desc: 'Hava ve sıvı geçirmez kilitli kapak yapısı.'
+            },
+            {
+                id: 'p-106',
+                code: 'KNR-106',
+                name: 'Desenli Renkli Mutfak Kasesi & Süzgeç Kombini',
+                mainCategory: 'Mutfak & Züccaciye',
+                subCategory: 'Kase & Süzgeçler',
+                image: 'https://images.unsplash.com/photo-1590794056226-79ef3a8147e1?auto=format&fit=crop&w=600&q=80',
+                boxQty: '24 Adet',
+                material: 'Esnek Dayanıklı Plastik',
+                desc: 'Meyve ve sebze yıkama süzgeci ve derin mutfak kasesi.'
+            },
+
+            // Plastik Ev Gereçleri
+            {
+                id: 'p-201',
+                code: 'KNR-201',
+                name: 'Konerkay Çekmece İçi Akrilik Düzenleyici Organizer',
+                mainCategory: 'Plastik Ev Gereçleri',
+                subCategory: 'Düzenleyici Kutular & Organizerlar',
+                image: 'https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&w=600&q=80',
+                boxQty: '30 Adet',
+                material: 'Şeffaf Sert Plastik',
+                desc: 'Mutfak kaşıkları, çatal ve ıvır zıvırlar için modüler ayraçlı kutu.'
+            },
+            {
+                id: 'p-202',
+                code: 'KNR-202',
+                name: 'Çok Amaçlı Bölmeli Hobi & Dikiş Kutusu',
+                mainCategory: 'Plastik Ev Gereçleri',
+                subCategory: 'Dikiş & Hobi Kutuları',
+                image: 'https://images.unsplash.com/photo-1582735689369-4fe89db7114c?auto=format&fit=crop&w=600&q=80',
+                boxQty: '20 Adet',
+                material: 'Sert Polipropilen',
+                desc: 'Dikiş iplikleri, iğne ve el işi malzemeleri düzenleyici çanta kutu.'
+            },
+            {
+                id: 'p-203',
+                code: 'KNR-203',
+                name: '3 Katlı Plastik Banyo Corner Köşelik Rafı',
+                mainCategory: 'Plastik Ev Gereçleri',
+                subCategory: 'Banyo Sepetleri & Aksesuarları',
+                image: 'https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&fit=crop&w=600&q=80',
+                boxQty: '12 Adet',
+                material: 'Nem ve Su Geçirmez Sert Plastik',
+                desc: 'Banyo şampuan ve sabunluk düzenleyici köşe rafı.'
+            },
+            {
+                id: 'p-204',
+                code: 'KNR-204',
+                name: '24\'lü Silikon Tutuculu Solmaz Çamaşır Mandalı',
+                mainCategory: 'Plastik Ev Gereçleri',
+                subCategory: 'Mandal & Askı Çeşitleri',
+                image: 'https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?auto=format&fit=crop&w=600&q=80',
+                boxQty: '50 Paket',
+                material: 'UV Korumalı Plastik + Paslanmaz Yay',
+                desc: 'Güneşte kırılmayan yüksek yay gücüne sahip çamaşır mandalı.'
+            },
+
+            // Temizlik & Hijyen
+            {
+                id: 'p-301',
+                code: 'KNR-301',
+                name: 'Konerkay Döner Başlıklı Mikrofiber Mop Seti',
+                mainCategory: 'Temizlik & Hijyen',
+                subCategory: 'Mop & Paspas Sistemleri',
+                image: 'https://images.unsplash.com/photo-1585837575652-267c041d77d4?auto=format&fit=crop&w=600&q=80',
+                boxQty: '8 Set',
+                material: 'Darbe Emici Plastik + Mikrofiber',
+                desc: 'Döner hazneli kolay sıkmalı temizlik kovası ve teleskopik saplı mop.'
+            },
+            {
+                id: 'p-302',
+                code: 'KNR-302',
+                name: '15 Litre Şeffaf Ölçekli Temizlik Kovası',
+                mainCategory: 'Temizlik & Hijyen',
+                subCategory: 'Temizlik Kovaları & Setleri',
+                image: 'https://images.unsplash.com/photo-1563453392212-326f5e854473?auto=format&fit=crop&w=600&q=80',
+                boxQty: '24 Adet',
+                material: 'Esnek Plastik',
+                desc: 'Ergonomik tutacaklı, kırılmaya dayanıklı genel temizlik kovası.'
+            },
+            {
+                id: 'p-303',
+                code: 'KNR-303',
+                name: 'Sert Kıllı Hazneli Oto ve Balkon Yıkama Fırçası',
+                mainCategory: 'Temizlik & Hijyen',
+                subCategory: 'Fırça & Süpürge Çeşitleri',
+                image: 'https://images.unsplash.com/photo-1584992236310-6edddc08acff?auto=format&fit=crop&w=600&q=80',
+                boxQty: '36 Adet',
+                material: 'Sentetik Fırça Kılı',
+                desc: 'Zemin ve dış mekan süpürme işlemlerine uygun fırça.'
+            },
+
+            // Hırdavat & Nalburie
+            {
+                id: 'p-401',
+                code: 'KNR-401',
+                name: '6 Parça Manyetik Uçlu Tornavida Seti',
+                mainCategory: 'Hırdavat & Nalburie',
+                subCategory: 'Tornavida & Setler',
+                image: 'https://images.unsplash.com/photo-1581147036324-c17ac41dfa6c?auto=format&fit=crop&w=600&q=80',
+                boxQty: '20 Set',
+                material: 'Krom Vanadyum Çelik + Kauçuk Sap',
+                desc: 'Düz ve yıldız uçlu manyetik el aletleri seti.'
+            },
+            {
+                id: 'p-402',
+                code: 'KNR-402',
+                name: 'Lüks Alüminyum Mobilya & Çekmece Kulpu (128mm)',
+                mainCategory: 'Hırdavat & Nalburie',
+                subCategory: 'Mobilya Kulpları & Çekmece Kolları',
+                image: 'https://images.unsplash.com/photo-1538688525198-9b88f6f53126?auto=format&fit=crop&w=600&q=80',
+                boxQty: '100 Adet',
+                material: 'Eloksal Kaplama Alüminyum',
+                desc: 'Mutfak dolapları ve çekmeceler için paslanmaz şık kulp.'
+            },
+            {
+                id: 'p-403',
+                code: 'KNR-403',
+                name: '100 Metre Şeffaf Ağır Hizmet Koli Bandı',
+                mainCategory: 'Hırdavat & Nalburie',
+                subCategory: 'Koli Bandı & İzole Bantlar',
+                image: 'https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?auto=format&fit=crop&w=600&q=80',
+                boxQty: '72 Adet',
+                material: 'Yüksek Yapışkan Akrilik',
+                desc: 'Paketleme ve ambalajlama işleri için kopmaz koli bandı.'
+            },
+            {
+                id: 'p-404',
+                code: 'KNR-404',
+                name: 'Şeffaf Silikon Şırınga & Silikon Tabancası Seti',
+                mainCategory: 'Hırdavat & Nalburie',
+                subCategory: 'Yapıştırıcılar & Silikonlar',
+                image: 'https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&w=600&q=80',
+                boxQty: '24 Set',
+                material: 'Silikon + Çelik Gövde',
+                desc: 'Mutfak lavabosu, banyo ve cam izolasyonu için profesyonel silikon.'
+            },
+            {
+                id: 'p-405',
+                code: 'KNR-405',
+                name: '5 Metre Stoplu Darbeye Dayanıklı Şerit Metre',
+                mainCategory: 'Hırdavat & Nalburie',
+                subCategory: 'Şerit Metre & Ölçü Aletleri',
+                image: 'https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&w=600&q=80',
+                boxQty: '40 Adet',
+                material: 'Kauçuk Muhafazalı Çelik Metre',
+                desc: 'İnşaat ve marangoz işleri için hassas ölçüm aparatı.'
+            }
+        ];
+
+        // Subcategory Mapping
+        const subCategoriesMap = {
+            'Tümü': ['Tüm Alt Kategoriler'],
+            'Mutfak & Züccaciye': ['Tümü', 'Kayık Tabak & Sunumluklar', 'Kaşık / Çatal / Bıçak Setleri', 'Saklama Kapları', 'Kase & Süzgeçler'],
+            'Plastik Ev Gereçleri': ['Tümü', 'Düzenleyici Kutular & Organizerlar', 'Dikiş & Hobi Kutuları', 'Banyo Sepetleri & Aksesuarları', 'Mandal & Askı Çeşitleri'],
+            'Temizlik & Hijyen': ['Tümü', 'Mop & Paspas Sistemleri', 'Temizlik Kovaları & Setleri', 'Fırça & Süpürge Çeşitleri'],
+            'Hırdavat & Nalburie': ['Tümü', 'Tornavida & Setler', 'Mobilya Kulpları & Çekmece Kolları', 'Koli Bandı & İzole Bantlar', 'Yapıştırıcılar & Silikonlar', 'Şerit Metre & Ölçü Aletleri']
+        };
+
+        // Global State
+        let products = [];
+        let currentMainCat = 'Tümü';
+        let currentSubCat = 'Tümü';
+
+        // Initialize App
+        window.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('year').textContent = new Date().getFullYear();
+            loadProducts();
+            renderSubCatPills();
+            renderCatalog();
+            updateAdminSubCatOptions();
+        });
+
+        function loadProducts() {
+            const saved = localStorage.getItem('kandemir_catalog_products');
+            if (saved) {
+                products = JSON.parse(saved);
+            } else {
+                products = [...initialProducts];
+                saveProducts();
+            }
+        }
+
+        function saveProducts() {
+            localStorage.setItem('kandemir_catalog_products', JSON.stringify(products));
+        }
+
+        // Render Sub-Category Badges
+        function renderSubCatPills() {
+            const container = document.getElementById('subCategoryContainer');
+            container.innerHTML = '';
+
+            const subCats = subCategoriesMap[currentMainCat] || ['Tümü'];
+
+            subCats.forEach(sc => {
+                const btn = document.createElement('button');
+                btn.className = `subcat-btn px-3 py-1.5 rounded-full border border-slate-300 bg-white text-slate-700 hover:border-brand-blue transition-all ${sc === currentSubCat ? 'subcat-active font-bold shadow-sm' : ''}`;
+                btn.innerHTML = sc === 'Tümü' ? '<i class="fa-solid fa-list mr-1"></i> Tümünü Göster' : sc;
+                btn.onclick = () => filterSubCategory(sc);
+                container.appendChild(btn);
+            });
+        }
+
+        function filterMainCategory(cat) {
+            currentMainCat = cat;
+            currentSubCat = 'Tümü';
+
+            document.querySelectorAll('.main-cat-btn').forEach(b => {
+                if (b.dataset.cat === cat) {
+                    b.classList.add('bg-blue-900', 'font-bold');
+                } else {
+                    b.classList.remove('bg-blue-900', 'font-bold');
+                }
+            });
+
+            document.getElementById('catalogTitle').textContent = cat === 'Tümü' ? 'Tüm Ürün Kataloğu' : `${cat} Ürünleri`;
+            renderSubCatPills();
+            renderCatalog();
+        }
+
+        function filterSubCategory(subCat) {
+            currentSubCat = subCat;
+            renderSubCatPills();
+            renderCatalog();
+        }
+
+        function handleSearch() {
+            renderCatalog();
+        }
+
+        function resetFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('mobileSearchInput').value = '';
+            filterMainCategory('Tümü');
+        }
+
+        // Render Catalog Grid
+        function renderCatalog() {
+            const grid = document.getElementById('productGrid');
+            const noResults = document.getElementById('noResults');
+            const searchVal = (document.getElementById('searchInput').value || document.getElementById('mobileSearchInput').value || '').toLowerCase().trim();
+
+            grid.innerHTML = '';
+
+            const filtered = products.filter(p => {
+                const matchesMain = (currentMainCat === 'Tümü' || p.mainCategory === currentMainCat);
+                const matchesSub = (currentSubCat === 'Tümü' || p.subCategory === currentSubCat);
+                const matchesSearch = !searchVal || 
+                                      p.name.toLowerCase().includes(searchVal) || 
+                                      p.code.toLowerCase().includes(searchVal) ||
+                                      p.subCategory.toLowerCase().includes(searchVal) ||
+                                      (p.desc && p.desc.toLowerCase().includes(searchVal));
+                return matchesMain && matchesSub && matchesSearch;
+            });
+
+            document.getElementById('productCount').textContent = filtered.length;
+
+            if (filtered.length === 0) {
+                noResults.classList.remove('hidden');
+                return;
+            } else {
+                noResults.classList.add('hidden');
+            }
+
+            filtered.forEach(p => {
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group";
+
+                const waMessage = encodeURIComponent(`Merhaba, Kandemir Hırdavat Züccaciye sitesinden '${p.name}' (Kod: ${p.code}) ürünü hakkında güncel fiyat ve detaylı bilgi almak istiyorum.`);
+                const waUrl = `https://wa.me/905300000000?text=${waMessage}`;
+
+                card.innerHTML = `
+                    <div onclick="openProductDetail('${p.id}')" class="cursor-pointer">
+                        <div class="relative aspect-4/3 overflow-hidden bg-slate-100 p-2">
+                            <img src="${p.image}" 
+                                 onerror="this.src='https://placehold.co/600x400/1E3A8A/FFF?text=Kandemir+Zuccaciye'" 
+                                 alt="${p.name}" 
+                                 class="w-full h-48 object-cover rounded-xl group-hover:scale-105 transition-transform duration-500">
+                            <span class="absolute top-4 left-4 bg-slate-900/80 text-amber-300 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase backdrop-blur-sm">
+                                ${p.code}
+                            </span>
+                        </div>
+
+                        <div class="p-4 space-y-2">
+                            <div class="text-[10px] font-bold text-brand-blue uppercase tracking-wider">
+                                ${p.subCategory}
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-sm line-clamp-2 group-hover:text-brand-blue transition-colors leading-snug">
+                                ${p.name}
+                            </h4>
+                            <p class="text-xs text-slate-500 line-clamp-2">${p.desc || 'Kandemir Züccaciye & Konerkay Plastik onaylı ürün.'}</p>
+                            
+                            <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-600 font-semibold">
+                                <span><i class="fa-solid fa-box text-slate-400 mr-1"></i> Koli: ${p.boxQty || 'Standart'}</span>
+                                <span class="text-emerald-600 font-bold"><i class="fa-solid fa-tag mr-1"></i> Fiyat Sorunuz</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 pt-0">
+                        <a href="${waUrl}" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl transition-all flex items-center justify-center gap-2 text-xs shadow-md shadow-emerald-600/20">
+                            <i class="fa-brands fa-whatsapp text-base"></i>
+                            <span>WhatsApp Fiyat & Sipariş Al</span>
+                        </a>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Product Detail Modal
+        function openProductDetail(id) {
+            const p = products.find(prod => prod.id === id);
+            if (!p) return;
+
+            document.getElementById('modalImg').src = p.image;
+            document.getElementById('modalTitle').textContent = p.name;
+            document.getElementById('modalCategory').textContent = p.subCategory;
+            document.getElementById('modalCode').textContent = `Kod: ${p.code}`;
+            document.getElementById('modalDesc').textContent = p.desc || 'Ürün Kandemir Hırdavat Züccaciye güvencesiyle toptan ve perakende satışa sunulmuştur.';
+            document.getElementById('modalBoxQty').textContent = p.boxQty || 'Standart Koli';
+            document.getElementById('modalMaterial').textContent = p.material || 'Kaliteli Plastik / Çelik';
+
+            const waMsg = encodeURIComponent(`Merhaba, Kandemir Hırdavat Züccaciye kataloğundaki '${p.name}' (Kod: ${p.code}) ürünü için fiyat ve sipariş detaylarını öğrenmek istiyorum.`);
+            document.getElementById('modalWhatsappBtn').href = `https://wa.me/905300000000?text=${waMsg}`;
+
+            document.getElementById('productDetailModal').classList.remove('hidden');
+        }
+
+        function closeProductDetailModal() {
+            document.getElementById('productDetailModal').classList.add('hidden');
+        }
+
+        // Flipbook Catalog View Modal
+        function openCatalogModal() {
+            const grid = document.getElementById('catalogFlipGrid');
+            grid.innerHTML = '';
+
+            products.forEach(p => {
+                const waMsg = encodeURIComponent(`Merhaba, Katalogdan '${p.name}' (${p.code}) ürünü hakkında fiyat öğrenmek istiyorum.`);
+                const div = document.createElement('div');
+                div.className = "border rounded-xl p-2 bg-slate-50 flex flex-col justify-between hover:shadow-md transition-shadow";
+                div.innerHTML = `
+                    <div>
+                        <img src="${p.image}" class="w-full h-28 object-cover rounded-lg mb-2">
+                        <span class="text-[9px] font-bold bg-slate-800 text-white px-1.5 py-0.5 rounded">${p.code}</span>
+                        <h5 class="text-xs font-bold text-slate-800 line-clamp-1 mt-1">${p.name}</h5>
+                    </div>
+                    <a href="https://wa.me/905300000000?text=${waMsg}" target="_blank" class="mt-2 text-center text-[10px] bg-emerald-600 text-white font-bold py-1.5 rounded hover:bg-emerald-700">
+                        Fiyat Sor
+                    </a>
+                `;
+                grid.appendChild(div);
+            });
+
+            document.getElementById('catalogModal').classList.remove('hidden');
+        }
+
+        function closeCatalogModal() {
+            document.getElementById('catalogModal').classList.add('hidden');
+        }
+
+        // Admin Panel Logic
+        function toggleAdminModal() {
+            const modal = document.getElementById('adminModal');
+            modal.classList.toggle('hidden');
+            if (!modal.classList.contains('hidden')) {
+                renderAdminTable();
+            }
+        }
+
+        function updateAdminSubCatOptions() {
+            const mainCat = document.getElementById('pMainCat').value;
+            const subSelect = document.getElementById('pSubCat');
+            subSelect.innerHTML = '';
+
+            const subs = subCategoriesMap[mainCat].filter(s => s !== 'Tümü');
+            subs.forEach(s => {
+                const opt = document.createElement('option');
+                opt.value = s;
+                opt.textContent = s;
+                subSelect.appendChild(opt);
+            });
+        }
+
+        function handleAddProduct(e) {
+            e.preventDefault();
+            const newProd = {
+                id: 'p-' + Date.now(),
+                code: document.getElementById('pCode').value,
+                name: document.getElementById('pName').value,
+                mainCategory: document.getElementById('pMainCat').value,
+                subCategory: document.getElementById('pSubCat').value,
+                image: document.getElementById('pImgUrl').value,
+                boxQty: document.getElementById('pBoxQty').value || '24 Adet',
+                material: document.getElementById('pMaterial').value || 'Sert Plastik / Çelik',
+                desc: document.getElementById('pDesc').value
+            };
+
+            products.unshift(newProd);
+            saveProducts();
+            renderCatalog();
+            renderAdminTable();
+
+            document.getElementById('addProductForm').reset();
+            alert("Ürün başarıyla eklendi ve kataloğa yansıtıldı!");
+        }
+
+        function deleteProduct(id) {
+            if (confirm("Bu ürünü katalogdan silmek istediğinizden emin misiniz?")) {
+                products = products.filter(p => p.id !== id);
+                saveProducts();
+                renderCatalog();
+                renderAdminTable();
+            }
+        }
+
+        function renderAdminTable() {
+            const tbody = document.getElementById('adminTableBody');
+            tbody.innerHTML = '';
+
+            products.forEach(p => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-2 font-bold text-slate-700">${p.code}</td>
+                    <td class="p-2"><img src="${p.image}" class="w-8 h-8 object-cover rounded"></td>
+                    <td class="p-2 font-semibold text-slate-800">${p.name}</td>
+                    <td class="p-2 text-[10px] text-slate-500">${p.subCategory}</td>
+                    <td class="p-2 text-right">
+                        <button onclick="deleteProduct('${p.id}')" class="text-red-600 hover:text-red-800"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+    </script>
+</body>
+</html>
